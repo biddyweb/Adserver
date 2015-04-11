@@ -1,17 +1,18 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
+var express       = require('express');
+var router        = express.Router();
+var bodyParser    = require('body-parser');
 var bodyParsedUrl = bodyParser.urlEncoded({extended: true});
-var UserInterest = require('../models/index.js').UserInterest;
-var http = require('http')
+var UserInterest  = require('../models/index.js').UserInterest;
+var http          = require('http');
 
 router.route('/')
 .post(bodyParsedUrl, function(request, response){
 	
-	var adSize = request.body.adSize;
+	var adSize 	     = request.body.adSize;
 	var offeredPrice = request.body.offeredPrice;
-	var dspRes = {};
-	var data = {};
+	var dspRes       = {};
+	var data         = {};
+	
 	var options = {
 		host: 'localhost',
 		port: 4000,
