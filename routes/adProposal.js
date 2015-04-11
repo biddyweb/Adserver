@@ -1,41 +1,41 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
-var bodyParsedUrl = bodyParser.urlEncoded({extended: true});
-var UserInterest = require('../models/index.js').UserInterest;
-var http = require('http')
+var express      = require('express');
+var router       = express.Router();
+var jsonParser   = require('body-parser').json();
+var http         = require('http');
 
 router.route('/')
-.post(bodyParsedUrl, function(request, response){
-	
+.post(jsonParser, function(request, response){
+  //console.log(request.body);	
 	var adSize = request.body.adSize;
 	var offeredPrice = request.body.offeredPrice;
-	var dspRes = {};
+	var dspRes = '';
 	var data = {};
 	var options = {
 		host: 'localhost',
 		port: 4000,
 		path: '/',
-		method: 'POST'
+  	method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
 	};
 	
-	UserInterest.find({where:{userId: request.body.userId}}).then(function(userInterests) {
-		if(!userInterests) return response.sendStatus(404);
-		request.on('finish', function(){			
-			data['size'] = adSize;
-			data['interests'] = userInterests;
+	//		console.log('finished');
+      data['size'] = adSize;
 			data['offeredPrice'] = offeredPrice;
-			data['userId'] = userId;
 			var req = http.request(options, function(res) {				
-				res.on('data', function (chunk) {
+        res.on('data', function (chunk) {
 					dspRes = dspRes + chunk;
-				});
+//				  console.log(chunk.toString('ascii'));
+          debugger;
+        });
 			});
-			req.write(data);
+      var stringData = JSON.stringify(data);
+			console.log(stringData);
+      req.write(stringData);
 			req.end();
-		});
+
 		response.send(dspRes);
 	});
-});
 
 module.exports = router;
