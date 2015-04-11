@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Publisher.hasMany(models.User, {foreignKey: 'publisherId'});
+        Publisher.hasMany(models.ActionType,{foreignKey: 'publisherId'}); 
       }
     }
   });
