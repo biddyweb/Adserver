@@ -1,7 +1,6 @@
 var express = require('express');
 var User = require('../Models/index').User;
-var bodyParser = require('body-parser');
-var jsonParser = bodyParser.json();
+var jsonParser = require('body-parser').json();
 var router = express.Router();
 
 router.route('/')
@@ -10,7 +9,7 @@ router.route('/')
     User.create(user).then(function(createdUser) {
         res.status(201).json({status: 'created', userId: createdUser.dataValues.id});  
     }, function(err) {
-      res.status(400).json({status: 'ERROR', message: 'Something went wrong ' + err});
+      res.status(400).json({status: 'ERROR', message: err});
     });   
   });
 
@@ -20,7 +19,7 @@ router.route('/:id')
       if(!user) return res.sendStatus(404);
       res.status(200).json(user.dataValues);
     },function(err) {
-      res.status(400).json({status: 'ERROR', message: 'Something went wrong ' + err});
+      res.status(400).json({status: 'ERROR', message: err});
     });
   });
 

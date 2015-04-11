@@ -1,6 +1,5 @@
 var express  = require('express');
-var bodyParser = require('body-parser');
-var urlEncoded = bodyParser.urlencoded({ extended: false });
+var urlEncoded = require('body-parser').urlencoded({ extended: false });
 var router = express.Router();
 var Publisher = require('../Models/index.js').Publisher;
 
@@ -10,7 +9,7 @@ router.route('/')
     Publisher.create(publisher).then(function(createdPublisher) {
       res.status(201).json({status: 'created', publisherId: createdPublisher.dataValues.id});
     }, function(err) {
-      res.status(404).json({status: 'ERROR', message: 'Something went wrong ' + err});
+      res.status(404).json({status: 'ERROR', message: err});
     });
   });
 
