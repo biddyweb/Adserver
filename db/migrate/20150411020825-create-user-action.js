@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false
       },
       actionTypeId: {
-        type: DataTypes.Integer,
+        type: DataTypes.INTEGER,
         references: 'ActionTypes',
         referencesKey: 'id',
         allowNull: false

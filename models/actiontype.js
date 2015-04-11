@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         ActionType.belongsTo(models.Publisher, {foreignKey: 'publisherId'});
-        ActionType.belongsToMany(models.User, {foreignKey: 'actionTypeId', otherKey: 'userId'});
+        ActionType.belongsToMany(models.User, {through: models.UserActions, foreignKey: 'actionTypeId'});
       }
     }
   });
